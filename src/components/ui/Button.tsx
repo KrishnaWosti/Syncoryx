@@ -1,0 +1,48 @@
+"use client";
+
+import { motion, type HTMLMotionProps } from "framer-motion";
+import { cn } from "@/lib/cn";
+
+type ButtonProps = HTMLMotionProps<"button"> & {
+  variant?: "primary" | "secondary" | "ghost";
+  size?: "sm" | "md" | "lg";
+};
+
+const sizes: Record<NonNullable<ButtonProps["size"]>, string> = {
+  sm: "h-10 px-4 text-sm",
+  md: "h-12 px-5 text-sm",
+  lg: "h-14 px-6 text-base",
+};
+
+const variants: Record<NonNullable<ButtonProps["variant"]>, string> = {
+  primary:
+    "text-white bg-gradient-to-b from-white/20 to-white/5 border border-white/15 shadow-[0_18px_55px_rgba(124,58,237,0.22)]",
+  secondary:
+    "text-white/90 bg-white/8 border border-white/12 hover:bg-white/10",
+  ghost:
+    "text-white/85 bg-transparent border border-white/10 hover:bg-white/6",
+};
+
+export function Button({
+  className,
+  variant = "primary",
+  size = "md",
+  ...props
+}: ButtonProps) {
+  return (
+    <motion.button
+      whileTap={{ scale: 0.98 }}
+      whileHover={{ y: -1 }}
+      transition={{ type: "spring", stiffness: 520, damping: 34 }}
+      className={cn(
+        "focus-ring inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-tight",
+        "select-none will-change-transform",
+        sizes[size],
+        variants[variant],
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
