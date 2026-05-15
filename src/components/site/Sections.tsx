@@ -332,16 +332,16 @@ export function Contact() {
               <Button
                 size="lg"
                 onClick={() => {
-                  window.location.href = "mailto:hello@syncoryx.agency";
+                  window.location.href = "mailto:contact@syncoryx";
                 }}
               >
-                Email hello@syncoryx.agency
+                Email contact@syncoryx
               </Button>
               <Button
                 size="lg"
                 variant="secondary"
                 onClick={() => {
-                  navigator.clipboard?.writeText("hello@syncoryx.agency");
+                  navigator.clipboard?.writeText("contact@syncoryx");
                 }}
               >
                 Copy email
