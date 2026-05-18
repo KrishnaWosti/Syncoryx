@@ -72,6 +72,36 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
       glow:
         "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(163,230,53,0.24),transparent_60%)]",
     },
+    {
+      title: "Multi-platform integrations",
+      points: [
+        "Amazon, Walmart, TikTok Shop, Etsy, and marketplaces",
+        "inventory and listing sync with conflict rules",
+        "order routing and fulfillment handoffs",
+      ],
+      glow:
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(251,191,36,0.26),transparent_60%)]",
+    },
+    {
+      title: "Web development",
+      points: [
+        "landing pages, custom sections, and store apps",
+        "performance-focused builds on Online Store 2.0",
+        "API connections and bespoke admin tooling",
+      ],
+      glow:
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(99,102,241,0.3),transparent_60%)]",
+    },
+    {
+      title: "Theme customization",
+      points: [
+        "brand-aligned layouts without breaking core flows",
+        "component systems that stay upgrade-safe",
+        "mobile UX, accessibility, and conversion polish",
+      ],
+      glow:
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(244,114,182,0.26),transparent_60%)]",
+    },
   ];
 
   return (
@@ -82,7 +112,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
       <SectionHeading
         eyebrow="Services"
         title="Everything between “it works” and “it scales.”"
-        subtitle="We connect the data layer to the storefront, the channels, and the team—so the store behaves consistently no matter where customers touch it."
+        subtitle="Catalog hygiene, integrations, flows, storefront builds, and theme work—so the store behaves consistently no matter where customers touch it."
       />
 
       <script
@@ -332,16 +362,29 @@ export function Contact() {
               <Button
                 size="lg"
                 onClick={() => {
-                  window.location.href = "mailto:contact@syncoryx.agency";
+                  window.open(
+                    "https://calendly.com/syncoryx-info/30min",
+                    "_blank",
+                    "noopener,noreferrer"
+                  );
                 }}
               >
-                Email contact@syncoryx.agency
+                Book a call
               </Button>
               <Button
                 size="lg"
                 variant="secondary"
                 onClick={() => {
-                  navigator.clipboard?.writeText("contact@syncoryx.agency");
+                  window.location.href = "mailto:info@syncoryx.agency";
+                }}
+              >
+                Email info@syncoryx.agency
+              </Button>
+              <Button
+                size="lg"
+                variant="ghost"
+                onClick={() => {
+                  navigator.clipboard?.writeText("info@syncoryx.agency");
                 }}
               >
                 Copy email

@@ -4,9 +4,9 @@ import { Services, Contact } from "@/components/site/Sections";
 import { Reveal } from "@/components/motion/Reveal";
 
 export const metadata: Metadata = {
-  title: "Shopify Services: Catalog Cleanup, Dedupe, Flows & Integrations",
+  title: "Shopify Services: Catalog, Integrations, Web Dev & Theme",
   description:
-    "Syncoryx services: Shopify product catalog cleanup, duplicate detection, Shopify Flow setup, GA4/GTM + Klaviyo integrations, and multi-channel feed integrity.",
+    "Syncoryx services: catalog cleanup, duplicate detection, flows, multi-channel and multi-platform integrations, web development, and theme customization for Shopify stores.",
   alternates: { canonical: "/services" },
 };
 
@@ -19,9 +19,9 @@ export default function ServicesPage() {
             Shopify data services that keep your store consistent everywhere.
           </h1>
           <p className="mt-4 text-sm sm:text-base leading-7 text-white/70 max-w-2xl">
-            We specialize in fixing the hidden layer that breaks attribution,
-            ads, and fulfillment: product data, event tracking, flows, and
-            multi‑channel integrations.
+            We fix the hidden layer that breaks attribution, ads, and
+            fulfillment—and build the storefront layer that converts: product
+            data, integrations, flows, web development, and theme customization.
           </p>
         </Reveal>
       </section>

@@ -95,7 +95,7 @@ export default function RootLayout({
                     "@id": `${siteUrl}/#org`,
                     name: brand,
                     url: siteUrl,
-                    email: "hello@syncoryx.agency",
+                    email: "info@syncoryx.agency",
                     sameAs: [],
                     description:
                       "A data-first Shopify agency specializing in catalog cleanup, duplicate detection, flows, and multi-channel integrations.",
