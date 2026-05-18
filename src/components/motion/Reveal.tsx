@@ -1,16 +1,33 @@
 "use client";
 
 import { ReactNode } from "react";
-import { motion, type Variants } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
+import { cn } from "@/lib/cn";
+import { springReveal } from "@/lib/motion";
 
-const base: Variants = {
+const reveal: Variants = {
   hidden: { opacity: 0, y: 14, filter: "blur(8px)" },
-  show: {
+  show: (delay: number) => ({
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 160, damping: 22, mass: 0.9 },
-  },
+    transition: {
+      ...springReveal,
+      delay,
+    },
+  }),
+};
+
+const revealReduced: Variants = {
+  hidden: { opacity: 0 },
+  show: (delay: number) => ({
+    opacity: 1,
+    transition: { duration: 0.2, delay },
+  }),
 };
 
 export function Reveal({
@@ -22,17 +39,18 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      className={className}
-      variants={base}
+      className={cn(className)}
+      variants={reduceMotion ? revealReduced : reveal}
+      custom={delay}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "0px 0px -15% 0px" }}
-      transition={{ delay }}
+      viewport={{ once: true, amount: 0.2, margin: "0px 0px -8% 0px" }}
     >
       {children}
     </motion.div>
   );
 }
-

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { MotionCard } from "@/components/motion/MotionCard";
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 
@@ -80,7 +80,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         "order routing and fulfillment handoffs",
       ],
       glow:
-        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(251,191,36,0.26),transparent_60%)]",
+        "bg-[radial-gradient(280px_160px_at_75%_25%,rgba(6,182,212,0.26),transparent_60%)]",
     },
     {
       title: "Web development",
@@ -90,7 +90,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         "API connections and bespoke admin tooling",
       ],
       glow:
-        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(99,102,241,0.3),transparent_60%)]",
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(124,58,237,0.32),transparent_60%)]",
     },
     {
       title: "Theme customization",
@@ -100,7 +100,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         "mobile UX, accessibility, and conversion polish",
       ],
       glow:
-        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(244,114,182,0.26),transparent_60%)]",
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(251,113,133,0.24),transparent_60%)]",
     },
   ];
 
@@ -112,7 +112,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
       <SectionHeading
         eyebrow="Services"
         title="Everything between “it works” and “it scales.”"
-        subtitle="Catalog hygiene, integrations, flows, storefront builds, and theme work—so the store behaves consistently no matter where customers touch it."
+        subtitle="We connect the data layer to the storefront, channels, and team—catalog hygiene, integrations, flows, and theme work—so the store behaves consistently everywhere."
       />
 
       <script
@@ -139,14 +139,10 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         }}
       />
 
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
         {cards.map((c, i) => (
-          <Reveal key={c.title} delay={0.05 * i}>
-            <motion.div
-              whileHover={{ y: -4 }}
-              transition={{ type: "spring", stiffness: 220, damping: 22 }}
-              className="relative overflow-hidden rounded-[22px] border border-white/10 bg-white/5 p-6 shadow-[0_18px_55px_rgba(0,0,0,0.25)]"
-            >
+          <Reveal key={c.title} delay={0.04 * Math.min(i, 5)} className="h-full">
+            <MotionCard className="card-shine relative h-full overflow-hidden rounded-[22px] border border-white/10 bg-white/5 p-5 sm:p-6 shadow-[0_18px_55px_rgba(0,0,0,0.25)]">
               <div className={`absolute inset-0 opacity-90 ${c.glow}`} />
               <div className="relative">
                 <h3 className="text-lg font-semibold tracking-tight text-white">
@@ -161,7 +157,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
                   ))}
                 </ul>
               </div>
-            </motion.div>
+            </MotionCard>
           </Reveal>
         ))}
       </div>
@@ -199,14 +195,12 @@ export function Work() {
         subtitle="No theatrics—just the operational clarity that makes growth repeatable."
       />
 
-      <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {items.map((it, i) => (
-          <Reveal key={it.title} delay={0.05 * i}>
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="glass p-6 relative overflow-hidden"
-            >
+          <Reveal key={it.title} delay={0.04 * Math.min(i, 4)} className="h-full">
+            <MotionCard className="card-shine glass relative h-full overflow-hidden p-5 sm:p-6">
               <div className="absolute -right-24 -top-24 h-56 w-56 rounded-full blur-3xl opacity-30 bg-[radial-gradient(circle_at_30%_30%,rgba(124,58,237,0.7),transparent_60%)]" />
+              <div className="absolute -left-16 bottom-0 h-40 w-40 rounded-full blur-3xl opacity-20 bg-[radial-gradient(circle_at_30%_30%,rgba(201,169,98,0.45),transparent_62%)]" />
               <div className="relative">
                 <div className="inline-flex items-center rounded-full border border-white/12 bg-white/6 px-2.5 py-1 text-xs text-white/70">
                   {it.tag}
@@ -218,7 +212,7 @@ export function Work() {
                   {it.detail}
                 </p>
               </div>
-            </motion.div>
+            </MotionCard>
           </Reveal>
         ))}
       </div>
@@ -343,9 +337,9 @@ export function FAQ() {
 export function Contact() {
   return (
     <section id="contact" className="container mt-14 sm:mt-16 lg:mt-24 pb-16">
-      <div className="glass p-8 sm:p-10 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-70 bg-[radial-gradient(900px_420px_at_15%_10%,rgba(124,58,237,0.25),transparent_60%),radial-gradient(900px_420px_at_85%_10%,rgba(6,182,212,0.18),transparent_55%),radial-gradient(900px_420px_at_55%_110%,rgba(163,230,53,0.14),transparent_60%)]" />
-        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <div className="glass card-shine p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-70 bg-[radial-gradient(900px_420px_at_15%_10%,rgba(124,58,237,0.25),transparent_60%),radial-gradient(900px_420px_at_85%_10%,rgba(6,182,212,0.18),transparent_55%),radial-gradient(900px_420px_at_55%_110%,rgba(163,230,53,0.14),transparent_60%),radial-gradient(520px_280px_at_72%_8%,rgba(201,169,98,0.12),transparent_58%)]" />
+        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
           <div>
             <p className="text-xs tracking-[0.18em] uppercase text-white/60">
               Contact
@@ -358,9 +352,10 @@ export function Contact() {
               or flow instability. We’ll respond with an audit plan and a realistic
               timeline.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-6 grid grid-cols-1 sm:flex sm:flex-wrap gap-3">
               <Button
                 size="lg"
+                className="w-full sm:w-auto"
                 onClick={() => {
                   window.open(
                     "https://calendly.com/syncoryx-info/30min",
@@ -374,15 +369,18 @@ export function Contact() {
               <Button
                 size="lg"
                 variant="secondary"
+                className="w-full sm:w-auto"
                 onClick={() => {
                   window.location.href = "mailto:info@syncoryx.agency";
                 }}
               >
-                Email info@syncoryx.agency
+                <span className="sm:hidden">Email us</span>
+                <span className="hidden sm:inline">Email info@syncoryx.agency</span>
               </Button>
               <Button
                 size="lg"
                 variant="ghost"
+                className="w-full sm:w-auto"
                 onClick={() => {
                   navigator.clipboard?.writeText("info@syncoryx.agency");
                 }}
@@ -395,7 +393,7 @@ export function Contact() {
             </p>
           </div>
 
-          <div className="rounded-[22px] border border-white/10 bg-black/25 p-6">
+          <div className="rounded-[22px] border border-white/10 bg-black/25 p-5 sm:p-6">
             <div className="text-sm font-semibold text-white">What we’ll ask</div>
             <ul className="mt-4 space-y-2 text-sm text-white/70">
               {[
