@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { MotionCard } from "@/components/motion/MotionCard";
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
@@ -40,7 +41,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         "collections that stay stable across seasons",
       ],
       glow:
-        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(124,58,237,0.35),transparent_60%)]",
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(59,130,246,0.28),transparent_60%)]",
     },
     {
       title: "Duplicate detection",
@@ -50,7 +51,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         "inventory feed mismatches",
       ],
       glow:
-        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(251,113,133,0.28),transparent_60%)]",
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(255,255,255,0.1),transparent_60%)]",
     },
     {
       title: "Flows & automations",
@@ -60,7 +61,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         "anti-loop protections and fallbacks",
       ],
       glow:
-        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(6,182,212,0.28),transparent_60%)]",
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(96,165,250,0.22),transparent_60%)]",
     },
     {
       title: "Multi-channel integrations",
@@ -70,7 +71,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         "reconciliation across sources of truth",
       ],
       glow:
-        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(163,230,53,0.24),transparent_60%)]",
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(30,58,95,0.55),transparent_60%)]",
     },
     {
       title: "Multi-platform integrations",
@@ -80,7 +81,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         "order routing and fulfillment handoffs",
       ],
       glow:
-        "bg-[radial-gradient(280px_160px_at_75%_25%,rgba(6,182,212,0.26),transparent_60%)]",
+        "bg-[radial-gradient(280px_160px_at_75%_25%,rgba(59,130,246,0.24),transparent_60%)]",
     },
     {
       title: "Web development",
@@ -90,7 +91,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         "API connections and bespoke admin tooling",
       ],
       glow:
-        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(124,58,237,0.32),transparent_60%)]",
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(147,197,253,0.18),transparent_60%)]",
     },
     {
       title: "Theme customization",
@@ -100,7 +101,7 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
         "mobile UX, accessibility, and conversion polish",
       ],
       glow:
-        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(251,113,133,0.24),transparent_60%)]",
+        "bg-[radial-gradient(280px_160px_at_25%_20%,rgba(255,255,255,0.08),transparent_60%)]",
     },
   ];
 
@@ -165,42 +166,52 @@ export function Services({ tightTop = false }: { tightTop?: boolean }) {
   );
 }
 
-export function Work() {
+export function Work({
+  fields,
+}: {
+  fields?: {
+    workSectionTitle?: string;
+    workSectionSubtitle?: string;
+  };
+}) {
+  const title = fields?.workSectionTitle || "Marketplace integrations that deliver real results.";
+  const subtitle = fields?.workSectionSubtitle || "We connect Shopify to every marketplace channel — eBay, Amazon, and beyond — with integrations that drive revenue and operational clarity.";
+
   const items = [
     {
-      title: "Catalog dedupe for a 12k-SKU store",
+      title: "eBay Integration — 3× Sales Increase",
       detail:
-        "Merged near-duplicate products/variants, cleaned tags/options, and stabilized collections to fix ads + search fragmentation.",
-      tag: "Catalog + Dedupe",
+        "Built a complete Shopify-to-eBay integration pipeline: automated listing sync, dynamic repricing, and real-time inventory management. Delivered a 3× increase in sales within the first quarter of launch.",
+      tag: "Shopify → eBay",
     },
     {
-      title: "Cross-channel event model rebuild",
+      title: "Multi-marketplace sync",
       detail:
-        "Aligned GA4/GTM events with Shopify + Klaviyo, reducing reporting drift and restoring attribution confidence.",
-      tag: "Analytics + Signals",
+        "Built custom integration tooling for a multi-channel retail client—connecting Shopify with marketplace feeds, inventory sync, and automated order routing across sales channels.",
+      tag: "Integrations + Tooling",
     },
     {
-      title: "Feed integrity + reconciliation",
+      title: "Full store build & launch",
       detail:
-        "Resolved SKU mismatches between Shopify, fulfillment, and ad feeds—preventing OOS ads and pricing leaks.",
-      tag: "Integrations",
+        "Delivered an end-to-end Shopify setup for a wellness brand client—store design, product catalog, collections, and launch-ready product pages.",
+      tag: "Web Dev + Catalog",
     },
   ];
 
   return (
     <section id="work" className="container mt-14 sm:mt-16 lg:mt-20">
       <SectionHeading
-        eyebrow="Proof"
-        title="Clean inputs. Predictable outputs."
-        subtitle="No theatrics—just the operational clarity that makes growth repeatable."
+        eyebrow="Our Work"
+        title={title}
+        subtitle={subtitle}
       />
 
       <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {items.map((it, i) => (
           <Reveal key={it.title} delay={0.04 * Math.min(i, 4)} className="h-full">
             <MotionCard className="card-shine glass relative h-full overflow-hidden p-5 sm:p-6">
-              <div className="absolute -right-24 -top-24 h-56 w-56 rounded-full blur-3xl opacity-30 bg-[radial-gradient(circle_at_30%_30%,rgba(124,58,237,0.7),transparent_60%)]" />
-              <div className="absolute -left-16 bottom-0 h-40 w-40 rounded-full blur-3xl opacity-20 bg-[radial-gradient(circle_at_30%_30%,rgba(201,169,98,0.45),transparent_62%)]" />
+              <div className="absolute -right-24 -top-24 h-56 w-56 rounded-full blur-3xl opacity-25 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.55),transparent_60%)]" />
+              <div className="absolute -left-16 bottom-0 h-40 w-40 rounded-full blur-3xl opacity-15 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.2),transparent_62%)]" />
               <div className="relative">
                 <div className="inline-flex items-center rounded-full border border-white/12 bg-white/6 px-2.5 py-1 text-xs text-white/70">
                   {it.tag}
@@ -334,11 +345,19 @@ export function FAQ() {
   );
 }
 
-export function Contact() {
+export function Contact({
+  fields,
+}: {
+  fields?: {
+    contactEmail?: string;
+  };
+}) {
+  const email = fields?.contactEmail || "contact@syncoryx.agency";
+
   return (
     <section id="contact" className="container mt-14 sm:mt-16 lg:mt-24 pb-16">
       <div className="glass card-shine p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-70 bg-[radial-gradient(900px_420px_at_15%_10%,rgba(124,58,237,0.25),transparent_60%),radial-gradient(900px_420px_at_85%_10%,rgba(6,182,212,0.18),transparent_55%),radial-gradient(900px_420px_at_55%_110%,rgba(163,230,53,0.14),transparent_60%),radial-gradient(520px_280px_at_72%_8%,rgba(201,169,98,0.12),transparent_58%)]" />
+        <div className="absolute inset-0 opacity-80 bg-[radial-gradient(900px_420px_at_15%_10%,rgba(59,130,246,0.18),transparent_60%),radial-gradient(900px_420px_at_85%_10%,rgba(255,255,255,0.06),transparent_55%),radial-gradient(900px_420px_at_55%_110%,rgba(30,58,95,0.35),transparent_60%)]" />
         <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
           <div>
             <p className="text-xs tracking-[0.18em] uppercase text-white/60">
@@ -371,18 +390,18 @@ export function Contact() {
                 variant="secondary"
                 className="w-full sm:w-auto"
                 onClick={() => {
-                  window.location.href = "mailto:info@syncoryx.agency";
+                  window.location.href = `mailto:${email}`;
                 }}
               >
                 <span className="sm:hidden">Email us</span>
-                <span className="hidden sm:inline">Email info@syncoryx.agency</span>
+                <span className="hidden sm:inline">Email {email}</span>
               </Button>
               <Button
                 size="lg"
                 variant="ghost"
                 className="w-full sm:w-auto"
                 onClick={() => {
-                  navigator.clipboard?.writeText("info@syncoryx.agency");
+                  navigator.clipboard?.writeText(email);
                 }}
               >
                 Copy email
@@ -393,7 +412,7 @@ export function Contact() {
             </p>
           </div>
 
-          <div className="rounded-[22px] border border-white/10 bg-black/25 p-5 sm:p-6">
+          <div className="rounded-[22px] border border-white/10 bg-[#0a1628]/60 p-5 sm:p-6">
             <div className="text-sm font-semibold text-white">What we’ll ask</div>
             <ul className="mt-4 space-y-2 text-sm text-white/70">
               {[
@@ -419,21 +438,47 @@ export function Contact() {
             </div>
           </div>
         </div>
+
+        {/* San Diego Map */}
+        <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
+          <iframe
+            title="Syncoryx Location — San Diego, CA"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-117.2812,32.6949,-117.0812,32.8149&layer=mapnik&marker=32.7157,-117.1611"
+            width="100%"
+            height="260"
+            style={{ border: 0, filter: "invert(0.9) hue-rotate(180deg) brightness(0.85) contrast(1.1)" }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+          <div className="bg-black/30 px-4 py-2 text-xs text-white/50">
+            📍 San Diego, California
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
-export function Footer() {
+export function Footer({
+  fields,
+}: {
+  fields?: {
+    footerTagline?: string;
+  };
+}) {
+  const tagline = fields?.footerTagline || "Data · Flows · Integrations · Marketplace Sync";
+
   return (
     <footer className="container pb-10">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-white/10 pt-8">
-        <div>
-          <div className="text-sm font-semibold tracking-tight text-white">
-            Syncoryx
-          </div>
-          <div className="mt-1 text-xs text-white/55">
-            Data · Flows · Integrations · Catalog hygiene
+        <div className="flex items-center gap-3">
+          <div>
+            <div className="text-base font-semibold tracking-tight text-white">
+              Syncoryx
+            </div>
+            <div className="mt-0.5 text-xs text-white/55">
+              {tagline}
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-3 text-xs text-white/60">

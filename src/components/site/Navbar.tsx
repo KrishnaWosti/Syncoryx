@@ -19,7 +19,7 @@ export function Navbar() {
 
   return (
     <div className="sticky top-0 z-50">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/35 to-transparent backdrop-blur-[2px]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#07111f]/90 to-transparent backdrop-blur-[2px]" />
       <div className="container relative">
         <motion.div
           initial={{ y: -16, opacity: 0 }}
@@ -27,11 +27,11 @@ export function Navbar() {
           transition={{ type: "spring", stiffness: 140, damping: 18 }}
           className={cn(
             "mt-4 flex items-center justify-between gap-3 rounded-full px-3 py-3 sm:px-4",
-            "border border-white/10 bg-black/25 backdrop-blur-xl shadow-[0_18px_45px_rgba(0,0,0,0.35)]"
+            "border border-white/12 bg-[#0c1a2e]/85 backdrop-blur-xl shadow-[0_18px_45px_rgba(0,0,0,0.25)]"
           )}
         >
-          <Link href="/" className="focus-ring rounded-full px-2 py-1 shrink-0">
-            <span className="text-base sm:text-lg font-semibold tracking-tight text-white">
+          <Link href="/" className="focus-ring rounded-full px-2 py-1 shrink-0 flex items-center">
+            <span className="text-lg font-semibold tracking-tight text-white hover:opacity-90 transition-opacity">
               Syncoryx
             </span>
           </Link>
@@ -63,7 +63,7 @@ export function Navbar() {
               }}
             >
               <span className="relative z-10">Get an audit</span>
-              <span className="absolute inset-0 opacity-60 bg-[radial-gradient(120px_60px_at_70%_20%,rgba(163,230,53,0.35),transparent_60%),radial-gradient(140px_80px_at_20%_80%,rgba(6,182,212,0.22),transparent_55%),radial-gradient(100px_50px_at_50%_0%,rgba(201,169,98,0.2),transparent_55%)]" />
+              <span className="absolute inset-0 opacity-40 bg-[radial-gradient(120px_60px_at_70%_20%,rgba(59,130,246,0.35),transparent_60%)]" />
             </Button>
             <button
               type="button"
@@ -106,7 +106,7 @@ export function Navbar() {
               transition={springHover}
               className="md:hidden overflow-hidden"
             >
-              <nav className="mt-2 rounded-[22px] border border-white/10 bg-black/40 backdrop-blur-xl p-2">
+              <nav className="mt-2 rounded-[22px] border border-white/10 bg-[#0c1a2e]/95 backdrop-blur-xl p-2">
                 {navItems.map((item) => (
                   <Link
                     key={item.href}

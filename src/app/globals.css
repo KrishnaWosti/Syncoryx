@@ -1,55 +1,60 @@
 @import "tailwindcss";
 
 :root {
-  /* Rich, Shopify-adjacent palette (warm + jewel tones) */
-  --bg-0: #070812;
-  --bg-1: #0b1020;
-  --fg-0: #f5f7ff;
-  --fg-1: rgba(245, 247, 255, 0.78);
+  --bg-0: #07111f;
+  --bg-1: #0c1a2e;
+  --bg-2: #132743;
+  --fg-0: #ffffff;
+  --fg-1: rgba(255, 255, 255, 0.76);
+  --fg-2: rgba(255, 255, 255, 0.58);
 
-  --card: rgba(255, 255, 255, 0.06);
+  --card: rgba(255, 255, 255, 0.05);
   --card-border: rgba(255, 255, 255, 0.12);
 
-  --accent-a: #7c3aed; /* violet */
-  --accent-b: #06b6d4; /* cyan */
-  --accent-c: #fb7185; /* rose */
-  --accent-d: #a3e635; /* lime */
-  --accent-gold: #c9a962;
-  --accent-gold-soft: rgba(201, 169, 98, 0.16);
+  --accent: #3b82f6;
+  --accent-soft: rgba(59, 130, 246, 0.22);
+  --accent-muted: rgba(147, 197, 253, 0.35);
 
-  --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-  --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.28);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  --shadow-soft: 0 16px 40px rgba(0, 0, 0, 0.22);
 
-  --ring: rgba(124, 58, 237, 0.45);
-  --radius: 18px;
+  --ring: rgba(147, 197, 253, 0.45);
+  --radius: 16px;
 
   --background: var(--bg-0);
   --foreground: var(--fg-0);
+
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Segoe UI", system-ui, sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-system);
 }
 
 body {
-  background: radial-gradient(900px 560px at 78% 4%, var(--accent-gold-soft), transparent 58%),
-    radial-gradient(1200px 800px at 12% -10%, rgba(124, 58, 237, 0.28), transparent 60%),
-    radial-gradient(1200px 800px at 92% 20%, rgba(6, 182, 212, 0.18), transparent 55%),
-    radial-gradient(900px 600px at 60% 120%, rgba(251, 113, 133, 0.14), transparent 60%),
+  background: radial-gradient(
+      1000px 700px at 10% -5%,
+      rgba(59, 130, 246, 0.14),
+      transparent 58%
+    ),
+    radial-gradient(900px 600px at 95% 15%, rgba(255, 255, 255, 0.06), transparent 55%),
     linear-gradient(180deg, var(--bg-0), var(--bg-1));
   color: var(--foreground);
-  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI,
-    Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: var(--font-system);
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
 }
 
 ::selection {
-  background: rgba(124, 58, 237, 0.35);
+  background: rgba(59, 130, 246, 0.35);
+  color: #fff;
 }
 
-/* Better perceived smoothness without hurting LCP */
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: auto;
@@ -79,8 +84,8 @@ body {
   background: var(--card);
   border: 1px solid var(--card-border);
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: var(--radius);
 }
 
@@ -90,20 +95,16 @@ body {
 
 .focus-ring:focus-visible {
   outline: 0;
-  box-shadow: 0 0 0 4px var(--ring);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .noise {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.08;
+  opacity: 0.04;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-}
-
-.card-shine {
-  position: relative;
 }
 
 .card-shine::after {
@@ -112,24 +113,10 @@ body {
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-  opacity: 0.11;
+  opacity: 0.14;
   background: radial-gradient(
-    160px 100px at 88% 10%,
-    rgba(201, 169, 98, 0.42),
+    200px 120px at 90% 8%,
+    rgba(255, 255, 255, 0.2),
     transparent 68%
   );
-}
-
-.gold-mote {
-  width: 2px;
-  height: 2px;
-  border-radius: 9999px;
-  background: rgba(212, 181, 116, 0.65);
-  box-shadow: 0 0 12px rgba(201, 169, 98, 0.28);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .gold-mote {
-    animation: none !important;
-  }
 }

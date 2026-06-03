@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect } from "react";
 import Lenis from "lenis";
-import { GoldDust } from "@/components/motion/GoldDust";
+import { PromoPopup } from "@/components/site/PromoPopup";
 
 export function Providers({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -38,7 +38,7 @@ export function Providers({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <GoldDust />
+      <PromoPopup />
       <div className="relative z-10 flex min-h-full flex-col">{children}</div>
     </>
   );

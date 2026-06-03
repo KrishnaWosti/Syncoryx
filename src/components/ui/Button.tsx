@@ -17,11 +17,11 @@ const sizes: Record<NonNullable<ButtonProps["size"]>, string> = {
 
 const variants: Record<NonNullable<ButtonProps["variant"]>, string> = {
   primary:
-    "text-white bg-gradient-to-b from-white/20 to-white/5 border border-white/15 shadow-[0_18px_55px_rgba(124,58,237,0.22),0_8px_28px_rgba(201,169,98,0.08)]",
+    "text-[#0a1628] bg-white border border-white hover:bg-white/95 shadow-[0_12px_32px_rgba(0,0,0,0.2)]",
   secondary:
-    "text-white/90 bg-white/8 border border-white/12 hover:bg-white/10",
+    "text-white bg-white/8 border border-white/18 hover:bg-white/12",
   ghost:
-    "text-white/85 bg-transparent border border-white/10 hover:bg-white/6",
+    "text-white/90 bg-transparent border border-white/14 hover:bg-white/6",
 };
 
 export function Button({
@@ -46,4 +46,3 @@ export function Button({
     />
   );
 }
-
