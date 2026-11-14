@@ -1,32 +1,40 @@
 import type { Metadata } from "next";
+import { WorkList } from "@/components/site/Blocks";
+import { CtaBand } from "@/components/site/CtaBand";
 import { PageShell } from "@/components/site/PageShell";
-import { Work, Contact } from "@/components/site/Sections";
-import { Reveal } from "@/components/motion/Reveal";
+import { PageHero } from "@/components/site/ServiceParts";
+import { workDisclaimer } from "@/content/work";
 
 export const metadata: Metadata = {
-  title: "Shopify Data & Integrations Work (Examples)",
+  title: "Work: Marketplace Integrations & Shopify Builds",
   description:
-    "Examples of Syncoryx work: catalog dedupe, feed reconciliation, GA4/GTM event model alignment, and multi-channel integration stabilization for Shopify stores.",
+    "Selected Syncoryx engagements: a Shopify to eBay integration, multi-marketplace inventory and order sync, and an end-to-end Shopify store build and launch.",
   alternates: { canonical: "/work" },
 };
 
 export default function WorkPage() {
   return (
     <PageShell>
-      <section className="container pt-12 sm:pt-16 lg:pt-20">
-        <Reveal>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white">
-            Work that reduces drift across channels.
-          </h1>
-          <p className="mt-4 text-sm sm:text-base leading-7 text-white/70 max-w-2xl">
-            The goal isn’t “more dashboards.” It’s one consistent story across
-            Shopify, analytics, email, and paid channels.
+      <PageHero
+        crumbs={[{ href: "/work", label: "Work" }]}
+        eyebrow="Work"
+        title="Recent work, described plainly."
+        lead="A few engagements that show the kind of problems we take on, what we did about them and what changed. Client names stay private."
+      />
+
+      <section className="section bg-mist">
+        <div className="wrap">
+          <WorkList detailed />
+          <p className="t-body mt-10 max-w-3xl border-l-2 border-signal pl-5 text-[1rem]">
+            {workDisclaimer}
           </p>
-        </Reveal>
+        </div>
       </section>
-      <Work />
-      <Contact />
+
+      <CtaBand
+        title="Have a problem that looks like one of these?"
+        body="Book a free 30-minute call and walk us through it. We will tell you how we would approach it."
+      />
     </PageShell>
   );
 }
-

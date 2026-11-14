@@ -1,35 +1,57 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Archivo, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { jsonLd, site } from "@/lib/site";
 
-const siteUrl = "https://syncoryx.agency";
-const brand = "Syncoryx";
+// Display: Archivo with its width axis, set wide to echo the extended wordmark.
+const archivo = Archivo({
+  subsets: ["latin"],
+  axes: ["wdth"],
+  variable: "--font-archivo",
+  display: "swap",
+});
+
+const instrument = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  display: "swap",
+});
+
+// Utility face for SKUs, order numbers, statuses and labels.
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
+
+const title = "Syncoryx | eCommerce Growth, Technology & Support Partner";
 
 export const metadata: Metadata = {
   title: {
-    default: "Syncoryx — Shopify Data, Flows & Multi‑Channel Integrations Agency",
+    default: title,
     template: "%s | Syncoryx",
   },
-  description:
-    "Syncoryx is a data-first Shopify agency specializing in flow setup, multi-channel integrations, product catalog cleanup, and duplicate detection—so reporting, ads, and fulfillment stay consistent.",
-  applicationName: brand,
-  metadataBase: new URL(siteUrl),
-  alternates: {
-    canonical: "/",
-  },
+  description: site.description,
+  applicationName: site.name,
+  metadataBase: new URL(site.url),
+  alternates: { canonical: "/" },
   keywords: [
-    "Shopify agency",
-    "Shopify data cleanup",
-    "Shopify product catalog cleanup",
-    "Shopify duplicate products",
-    "Shopify Flow setup",
-    "Shopify integrations",
-    "multi-channel integrations",
-    "Klaviyo integrations",
-    "GA4 GTM Shopify",
-    "product feed cleanup",
-    "Meta catalog issues Shopify",
-    "Google Merchant Center Shopify",
+    "eCommerce agency",
+    "marketplace integration",
+    "multi-channel eCommerce",
+    "Shopify development",
+    "Shopify store management",
+    "Shopify app customer support",
+    "outsourced support for Shopify apps",
+    "Etsy Shopify integration",
+    "Walmart Marketplace integration",
+    "TikTok Shop integration",
+    "eBay Shopify integration",
+    "Faire integration",
+    "inventory sync",
+    "product catalog management",
   ],
   robots: {
     index: true,
@@ -44,19 +66,51 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    url: siteUrl,
-    siteName: brand,
-    title: "Syncoryx — Shopify Data, Flows & Integrations",
-    description:
-      "Clean up Shopify product data, remove duplicates, set up flows, and connect multi-channel integrations without reporting drift.",
+    url: site.url,
+    siteName: site.name,
+    title,
+    description: site.description,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Syncoryx — Shopify Data, Flows & Integrations",
+    title,
     description:
-      "Catalog cleanup, duplicate detection, flows, and multi-channel integrations for Shopify stores.",
+      "Marketplace integrations, Shopify development and store management, and human support for Shopify apps.",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+};
+
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": site.url + "/#org",
+      name: site.name,
+      url: site.url,
+      email: site.email,
+      logo: site.url + "/logo.png",
+      description: site.description,
+      knowsAbout: [
+        "Shopify",
+        "Marketplace integration",
+        "Multi-channel eCommerce operations",
+        "Customer support for Shopify apps",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": site.url + "/#website",
+      url: site.url,
+      name: site.name,
+      publisher: { "@id": site.url + "/#org" },
+      inLanguage: "en-US",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -64,41 +118,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const fontVars = [archivo.variable, instrument.variable, plexMono.variable].join(" ");
+
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col font-sans">
-        <Providers>
-          {children}
-          <script
-            type="application/ld+json"
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD required for SEO
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@graph": [
-                  {
-                    "@type": "Organization",
-                    "@id": `${siteUrl}/#org`,
-                    name: brand,
-                    url: siteUrl,
-                    email: "contact@syncoryx.agency",
-                    sameAs: [],
-                    description:
-                      "A data-first Shopify agency specializing in catalog cleanup, duplicate detection, flows, and multi-channel integrations.",
-                  },
-                  {
-                    "@type": "WebSite",
-                    "@id": `${siteUrl}/#website`,
-                    url: siteUrl,
-                    name: brand,
-                    publisher: { "@id": `${siteUrl}/#org` },
-                    inLanguage: "en-US",
-                  },
-                ],
-              }),
-            }}
-          />
-        </Providers>
+    <html lang="en" className={fontVars + " h-full"}>
+      <body className="flex min-h-full flex-col">
+        <Providers>{children}</Providers>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(organizationLd) }}
+        />
       </body>
     </html>
   );

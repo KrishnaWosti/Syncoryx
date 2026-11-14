@@ -1,35 +1,9 @@
 "use client";
 
-import { ReactNode } from "react";
-import {
-  motion,
-  useReducedMotion,
-  type Variants,
-} from "framer-motion";
-import { cn } from "@/lib/cn";
-import { springReveal } from "@/lib/motion";
+import type { ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
-const reveal: Variants = {
-  hidden: { opacity: 0, y: 14, filter: "blur(8px)" },
-  show: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      ...springReveal,
-      delay,
-    },
-  }),
-};
-
-const revealReduced: Variants = {
-  hidden: { opacity: 0 },
-  show: (delay: number) => ({
-    opacity: 1,
-    transition: { duration: 0.2, delay },
-  }),
-};
-
+/** A single, quiet scroll reveal. Used on section content, never on the hero. */
 export function Reveal({
   children,
   delay = 0,
@@ -41,14 +15,17 @@ export function Reveal({
 }) {
   const reduceMotion = useReducedMotion();
 
+  if (reduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
-      className={cn(className)}
-      variants={reduceMotion ? revealReduced : reveal}
-      custom={delay}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.2, margin: "0px 0px -8% 0px" }}
+      className={className}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15, margin: "0px 0px -6% 0px" }}
+      transition={{ duration: 0.55, ease: [0.2, 0.7, 0.2, 1], delay }}
     >
       {children}
     </motion.div>

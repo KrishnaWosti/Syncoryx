@@ -1,48 +1,60 @@
-"use client";
-
-import { motion, type HTMLMotionProps } from "framer-motion";
+import Link from "next/link";
+import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { springTap } from "@/lib/motion";
+import { ArrowIcon } from "@/components/ui/icons";
 
-type ButtonProps = HTMLMotionProps<"button"> & {
-  variant?: "primary" | "secondary" | "ghost";
-  size?: "sm" | "md" | "lg";
+type Variant = "primary" | "dark" | "outline" | "light" | "outline-light";
+
+const variantClass: Record<Variant, string> = {
+  primary: "btn-primary",
+  dark: "btn-dark",
+  outline: "btn-outline",
+  light: "btn-light",
+  "outline-light": "btn-outline-light",
 };
 
-const sizes: Record<NonNullable<ButtonProps["size"]>, string> = {
-  sm: "h-10 px-4 text-sm",
-  md: "h-12 px-5 text-sm",
-  lg: "h-14 px-6 text-base",
+type ButtonLinkProps = {
+  href: string;
+  children: ReactNode;
+  variant?: Variant;
+  size?: "sm" | "md";
+  arrow?: boolean;
+  className?: string;
 };
 
-const variants: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary:
-    "text-[#0a1628] bg-white border border-white hover:bg-white/95 shadow-[0_12px_32px_rgba(0,0,0,0.2)]",
-  secondary:
-    "text-white bg-white/8 border border-white/18 hover:bg-white/12",
-  ghost:
-    "text-white/90 bg-transparent border border-white/14 hover:bg-white/6",
-};
-
-export function Button({
-  className,
+/** A link styled as a button. Internal routes use next/link, everything else a plain anchor. */
+export function ButtonLink({
+  href,
+  children,
   variant = "primary",
   size = "md",
-  ...props
-}: ButtonProps) {
+  arrow = false,
+  className,
+}: ButtonLinkProps) {
+  const classes = cn("btn", variantClass[variant], size === "sm" && "btn-sm", className);
+  const content = (
+    <>
+      {children}
+      {arrow ? <ArrowIcon className="btn-arrow" /> : null}
+    </>
+  );
+
+  if (href.startsWith("/")) {
+    return (
+      <Link href={href} className={classes}>
+        {content}
+      </Link>
+    );
+  }
+
+  const external = href.startsWith("http");
   return (
-    <motion.button
-      whileTap={{ scale: 0.98 }}
-      whileHover={{ y: -1 }}
-      transition={springTap}
-      className={cn(
-        "focus-ring inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-tight",
-        "select-none will-change-transform",
-        sizes[size],
-        variants[variant],
-        className
-      )}
-      {...props}
-    />
+    <a
+      href={href}
+      className={classes}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      {content}
+    </a>
   );
 }

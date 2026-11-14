@@ -1,151 +1,79 @@
-"use client";
+import { ArtifactCaption } from "@/components/site/Artifacts";
+import { SyncBoard } from "@/components/site/SyncBoard";
+import { ButtonLink } from "@/components/ui/Button";
+import { defaultSiteFields, type SiteFields } from "@/lib/site-fields";
+import { bookHref, site } from "@/lib/site";
 
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/Button";
-
-const chips = [
-  "Shopify + eBay",
-  "Amazon",
-  "Meta & Google",
-  "Klaviyo",
-  "GA4 + GTM",
-  "Marketplace sync",
-  "Inventory & feeds",
-  "Flows & automations",
-];
+/** Renders the editable tagline: [brackets] highlight a phrase, a newline breaks the line. */
+function Tagline({ text }: { text: string }) {
+  return (
+    <>
+      {text.split("\n").map((line, lineIndex) => (
+        <span key={lineIndex}>
+          {lineIndex > 0 ? <br /> : null}
+          {line.split(/\[(.*?)\]/).map((part, partIndex) =>
+            partIndex % 2 === 1 ? (
+              <span key={partIndex} className="text-signal">
+                {part}
+              </span>
+            ) : (
+              part
+            ),
+          )}
+        </span>
+      ))}
+    </>
+  );
+}
 
 export function Hero({
-  fields,
+  fields = defaultSiteFields,
 }: {
-  fields?: {
-    heroTagline?: string;
-    heroSubtitle?: string;
-    ctaText?: string;
-  };
+  fields?: Pick<SiteFields, "heroTagline" | "heroSubtitle" | "ctaText">;
 }) {
-  const tagline = fields?.heroTagline || "Clean data. [Sharp flows.]\nMarketplace integrations that scale.";
-  const subtitle = fields?.heroSubtitle || "We build cross-channel integrations between Shopify, eBay, Amazon, and other marketplaces — set up stores, sync inventory, manage product catalogs, and eliminate data fragmentation across channels.";
-  const ctaText = fields?.ctaText || "Get a data + flows audit";
-
-  const renderFormattedTagline = (text: string) => {
-    const lines = text.split("\n");
-    return lines.map((line, lineIdx) => {
-      const parts = line.split(/\[(.*?)\]/);
-      return (
-        <span key={lineIdx}>
-          {lineIdx > 0 && <br className="hidden sm:block" />}
-          {parts.map((part, partIdx) => {
-            if (partIdx % 2 === 1) {
-              return (
-                <span
-                  key={partIdx}
-                  className="text-transparent bg-clip-text bg-[linear-gradient(90deg,#ffffff,#bfdbfe,#60a5fa)]"
-                >
-                  {part}
-                </span>
-              );
-            }
-            return part;
-          })}
-        </span>
-      );
-    });
-  };
-
   return (
-    <section className="container relative pt-12 sm:pt-16 lg:pt-20">
-      <div className="absolute -top-10 left-1/2 -translate-x-1/2 h-[280px] w-[280px] sm:h-[420px] sm:w-[420px] lg:h-[520px] lg:w-[520px] rounded-full blur-3xl opacity-25 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.45),transparent_60%),radial-gradient(circle_at_70%_60%,rgba(255,255,255,0.08),transparent_58%),radial-gradient(circle_at_40%_80%,rgba(30,58,95,0.5),transparent_60%)]" />
-      <div className="absolute inset-x-0 top-10 h-80 opacity-80">
-        <div className="noise" />
-      </div>
+    <section className="overflow-hidden border-b border-line">
+      <div className="wrap pb-16 pt-12 sm:pt-16 lg:pb-24 lg:pt-20">
+        <p className="t-eyebrow">{site.positioning}</p>
+        <h1 className="t-hero mt-6 max-w-[17ch]">
+          <Tagline text={fields.heroTagline} />
+        </h1>
 
-      <div className="relative glass card-shine p-6 sm:p-8 lg:p-10 overflow-hidden">
-        <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full blur-3xl opacity-30 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.4),transparent_62%)]" />
-        <div className="absolute -left-24 -bottom-24 h-80 w-80 rounded-full blur-3xl opacity-25 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.12),transparent_62%)]" />
-
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 150, damping: 20 }}
-          className="max-w-3xl"
-        >
-          <p className="text-sm text-white/75">
-            Shopify + marketplace integration agency — eBay, Amazon & beyond
-          </p>
-
-          <h1 className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white">
-            {renderFormattedTagline(tagline)}
-          </h1>
-
-          <p className="mt-5 text-base sm:text-lg leading-7 text-white/70 max-w-2xl">
-            {subtitle}
-          </p>
-
-          <div className="mt-7 flex flex-col sm:flex-row gap-3">
-            <Button
-              size="lg"
-              className="w-full sm:w-auto"
-              onClick={() => {
-                document
-                  .querySelector("#contact")
-                  ?.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-            >
-              {ctaText}
-              <span aria-hidden className="ml-1 opacity-70">
-                →
-              </span>
-            </Button>
-            <Button
-              size="lg"
-              variant="secondary"
-              className="w-full sm:w-auto"
-              onClick={() => {
-                document
-                  .querySelector("#services")
-                  ?.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-            >
-              See what we do
-            </Button>
+        <div className="mt-10 grid grid-cols-1 gap-12 lg:mt-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+          <div className="min-w-0 lg:pt-2">
+            <p className="t-lead max-w-xl">{fields.heroSubtitle}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <ButtonLink href={bookHref} arrow>
+                {fields.ctaText}
+              </ButtonLink>
+              <ButtonLink href="#services" variant="outline">
+                See what we take on
+              </ButtonLink>
+            </div>
+            <p className="mt-5 max-w-md text-[0.9375rem] text-ink-mute">
+              A free 30-minute call. We assess what you need and tell you plainly whether
+              we can help.
+            </p>
           </div>
-        </motion.div>
 
-        <div className="mt-9 flex flex-wrap gap-2">
-          {chips.map((chip, i) => (
-            <motion.span
-              key={chip}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.06 * i, duration: 0.45 }}
-              className="inline-flex items-center rounded-full border border-white/12 bg-white/6 px-3 py-1.5 text-xs text-white/75"
-            >
-              {chip}
-            </motion.span>
-          ))}
-        </div>
-
-        <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            { k: "Marketplaces", v: "eBay · Amazon · Shopify" },
-            { k: "Channels", v: "connected + consistent" },
-            { k: "Catalog", v: "cleanup + sync" },
-            { k: "Integrations", v: "flows that scale" },
-          ].map((s, idx) => (
-            <motion.div
-              key={s.k}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 + idx * 0.06 }}
-              className="rounded-2xl border border-white/10 bg-white/5 p-4"
-            >
-              <div className="text-sm font-semibold text-white">{s.k}</div>
-              <div className="mt-1 text-xs text-white/60">{s.v}</div>
-            </motion.div>
-          ))}
+          <div className="min-w-0">
+            <SyncBoard />
+            {/* The other side of the business: a support ticket, in one line. */}
+            <div className="panel mt-3 flex flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:gap-4">
+              <span className="t-eyebrow shrink-0 !text-[0.625rem]">App support inbox</span>
+              <span className="min-w-0 flex-1 truncate text-[0.875rem] font-medium">
+                &ldquo;Etsy orders are not importing after install&rdquo;
+              </span>
+              <span className="pill pill-ok shrink-0 self-start sm:self-auto">
+                Resolved in chat
+              </span>
+            </div>
+            <ArtifactCaption>
+              Illustration with sample data: the kind of work we set up and look after.
+            </ArtifactCaption>
+          </div>
         </div>
       </div>
     </section>
   );
 }
-
