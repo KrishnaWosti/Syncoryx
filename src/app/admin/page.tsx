@@ -30,7 +30,17 @@ interface SiteFields {
   workSectionSubtitle: string;
 }
 
-type Tab = "popup" | "subscribers" | "fields";
+interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  company: string;
+  topic: string;
+  message: string;
+  createdAt: string;
+}
+
+type Tab = "popup" | "subscribers" | "messages" | "fields";
 
 export default function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -47,6 +57,10 @@ export default function AdminPage() {
   // Subscribers state
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [subscriberCount, setSubscriberCount] = useState(0);
+
+  // Contact form messages state
+  const [messages, setMessages] = useState<ContactMessage[]>([]);
+  const [messageCount, setMessageCount] = useState(0);
 
   // Fields state
   const [fields, setFields] = useState<SiteFields | null>(null);
@@ -105,6 +119,17 @@ export default function AdminPage() {
     } catch { /* silent */ }
   }, []);
 
+  const fetchMessages = useCallback(async () => {
+    try {
+      const res = await fetch("/api/admin/messages");
+      if (res.ok) {
+        const data = await res.json();
+        setMessages(data.messages);
+        setMessageCount(data.total);
+      }
+    } catch { /* silent */ }
+  }, []);
+
   const fetchFields = useCallback(async () => {
     try {
       const res = await fetch("/api/admin/fields");
@@ -116,9 +141,10 @@ export default function AdminPage() {
     if (authenticated) {
       fetchPopup();
       fetchSubscribers();
+      fetchMessages();
       fetchFields();
     }
-  }, [authenticated, fetchPopup, fetchSubscribers, fetchFields]);
+  }, [authenticated, fetchPopup, fetchSubscribers, fetchMessages, fetchFields]);
 
   const savePopup = async () => {
     if (!popup) return;
@@ -249,8 +275,8 @@ export default function AdminPage() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Tabs */}
-        <div className="flex gap-1 rounded-2xl border border-white/10 bg-white/5 p-1 w-fit mb-8">
-          {(["popup", "subscribers", "fields"] as Tab[]).map((tab) => (
+        <div className="flex flex-wrap gap-1 rounded-2xl border border-white/10 bg-white/5 p-1 w-fit max-w-full mb-8">
+          {(["popup", "subscribers", "messages", "fields"] as Tab[]).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -262,6 +288,7 @@ export default function AdminPage() {
             >
               {tab === "popup" && "Popup Manager"}
               {tab === "subscribers" && `Subscribers (${subscriberCount})`}
+              {tab === "messages" && `Messages (${messageCount})`}
               {tab === "fields" && "Site Fields"}
             </button>
           ))}
@@ -419,6 +446,74 @@ export default function AdminPage() {
                         ))}
                       </tbody>
                     </table>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {/* MESSAGES TAB */}
+          {activeTab === "messages" && (
+            <motion.div
+              key="messages"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+            >
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-lg font-semibold text-white">
+                    Contact Messages
+                    <span className="ml-2 text-sm font-normal text-white/40">({messageCount})</span>
+                  </h2>
+                  <button
+                    onClick={fetchMessages}
+                    className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/60 hover:bg-white/10 hover:text-white transition-colors"
+                  >
+                    Refresh
+                  </button>
+                </div>
+
+                {messages.length === 0 ? (
+                  <div className="rounded-xl border border-white/8 bg-white/3 p-8 text-center">
+                    <div className="text-sm text-white/40">No messages yet</div>
+                    <div className="mt-1 text-xs text-white/25">Messages sent through the contact form will appear here</div>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {messages.map((msg) => (
+                      <div key={msg.id} className="rounded-xl border border-white/8 bg-white/3 p-4">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                            <span className="text-sm font-semibold text-white">{msg.name}</span>
+                            <a
+                              href={`mailto:${msg.email}`}
+                              className="font-mono text-xs text-cyan-300 hover:underline"
+                            >
+                              {msg.email}
+                            </a>
+                            {msg.company && (
+                              <span className="text-xs text-white/50">{msg.company}</span>
+                            )}
+                          </div>
+                          <span className="text-xs text-white/40">
+                            {new Date(msg.createdAt).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </span>
+                        </div>
+                        <span className="mt-3 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] text-white/60">
+                          {msg.topic}
+                        </span>
+                        <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-white/75">
+                          {msg.message}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
